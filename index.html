@@ -680,6 +680,38 @@ print 'It took ' + i + ' iterations to sort the deck.';</code></pre>
 			<script src="assets/js/breakpoints.min.js"></script>
 			<script src="assets/js/util.js"></script>
 			<script src="assets/js/main.js"></script>
+<!-- Ваш код для отслеживания событий -->
+<script>
+    // Отслеживание кликов по ссылкам
+    document.querySelectorAll('nav a').forEach(anchor => {
+        anchor.addEventListener('click', function() {
+            if (this.hash) {
+                gtag('event', 'click', {
+                    'event_category': 'Section Visit',
+                    'event_label': this.hash,
+                    'value': 1
+                });
+            }
+        });
+    });
 
+    // Отслеживание прокрутки до блоков article
+    let articles = document.querySelectorAll('article');
+    let observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                gtag('event', 'scroll', {
+                    'event_category': 'Article Scroll',
+                    'event_label': entry.target.id,
+                    'value': 1
+                });
+            }
+        });
+    });
+
+    articles.forEach(article => {
+        observer.observe(article);
+    });
+</script>
 	</body>
 </html>
